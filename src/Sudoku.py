@@ -65,10 +65,13 @@ class Sudoku:
 
     def solve(self):
         idx = 0
-        while idx != 81:
+        while True:
             # move forwards until we find a non-permanent cell
             while idx in self.permanent:
                 idx += 1
+            # if we reach the end of the sudoku then it has been solved
+            if idx > 80:
+                return
             # increment value at this position (idx // 9 == row index; idx % 9 == column index)
             self.sudoku[idx // 9][idx % 9] += 1
             # check we haven't incremented past 9
