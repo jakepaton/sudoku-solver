@@ -3,11 +3,22 @@
 
 class Sudoku:
     def __init__(self, sudoku_string):
+        # make sure sudoku can be parsed
+        if not Sudoku.is_parsable(sudoku_string):
+            raise ValueError("Invalid Sudoku: couldn't parse")
+
         self.sudoku = Sudoku.convert_to_2d(sudoku_string)
+        # make sure the sudoku is valid
+        if not self.is_valid():
+            raise ValueError("Invalid Sudoku: contains mistakes")
 
         # remember positions of starting numbers
         self.permanent = [idx for (idx, chr) in enumerate(sudoku_string) if chr != '0']
 
+
+    def is_parsable(sudoku_string):
+        return len(sudoku_string) == 81 and sudoku_string.isdigit()
+        
 
     def __repr__(self) -> str:
         return Sudoku.string_repr(self.sudoku)
@@ -88,4 +99,4 @@ class Sudoku:
             if self.is_valid():
                 idx += 1
             if idx < 0:
-                raise ValueError("Invalid sudoku; no possible solution")
+                raise ValueError("Invalid Sudoku: no possible solution")
